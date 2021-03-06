@@ -1,0 +1,21 @@
+.wrapper {
+  text-align: center;
+}
+
+.controller {
+  display: flex;
+  justify-content: center;
+}
+
+.controller form {
+  margin-left: 3rem;
+}
+
+.visualizer-wrapper .row {
+  display: flex;
+  justify-content: center;
+}
+
+.visualizer-wrapper .row .element {
+  padding: 1rem;
+}

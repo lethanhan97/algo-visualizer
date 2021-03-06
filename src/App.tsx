@@ -22,27 +22,29 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <header>
         <h1>Algo Visualizer by An</h1>
       </header>
-      <section>
+      <section className="controller">
         <button onClick={generateRandomArray}>Generate Array</button>
 
-        <select
-          value={sortType}
-          onChange={(e) => setSortType(e.target.value as SortType)}
-        >
-          <option value={SortType.BUBBLE_SORT}>Bubble Sort</option>
-          <option value={SortType.INSERTION_SORT}>Insertion Sort</option>
-        </select>
-        <button>Sort</button>
+        <form>
+          <select
+            value={sortType}
+            onChange={(e) => setSortType(e.target.value as SortType)}
+          >
+            <option value={SortType.BUBBLE_SORT}>Bubble Sort</option>
+            <option value={SortType.INSERTION_SORT}>Insertion Sort</option>
+          </select>
+          <button onClick={(e) => e.preventDefault()}>Sort</button>
+        </form>
       </section>
 
-      <section>
-        <div>
+      <section className="visualizer-wrapper">
+        <div className="row">
           {arr.map((i) => (
-            <div>{i}</div>
+            <div className="element">{i}</div>
           ))}
         </div>
       </section>
