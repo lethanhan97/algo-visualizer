@@ -81,6 +81,7 @@ function App() {
 
   const insertionSort = () => {
     const res = Array.from(arr);
+    const progress: ArrElement[][] = [];
 
     for (let i = 1; i < res.length; i++) {
       for (let j = 0; j < i; j++) {
@@ -88,15 +89,16 @@ function App() {
         const curJ = res[j];
 
         if (curI.value < curJ.value) {
-          // time to swap
-          console.log("swapping");
           const temp = res.splice(i, 1);
           res.splice(j, 0, temp[0]);
+
+          const snapshot = Array.from(res);
+          progress.push(snapshot);
         }
       }
     }
 
-    console.log(res);
+    setSnapshots(progress);
   };
 
   return (
