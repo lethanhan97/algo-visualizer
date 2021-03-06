@@ -47,6 +47,7 @@ function App() {
         bubbleSort();
         break;
       case SortType.INSERTION_SORT:
+        insertionSort();
         break;
       default:
         break;
@@ -76,6 +77,26 @@ function App() {
     } while (hadSwapped);
 
     setSnapshots(progress);
+  };
+
+  const insertionSort = () => {
+    const res = Array.from(arr);
+
+    for (let i = 1; i < res.length; i++) {
+      for (let j = 0; j < i; j++) {
+        const curI = res[i];
+        const curJ = res[j];
+
+        if (curI.value < curJ.value) {
+          // time to swap
+          console.log("swapping");
+          const temp = res.splice(i, 1);
+          res.splice(j, 0, temp[0]);
+        }
+      }
+    }
+
+    console.log(res);
   };
 
   return (
