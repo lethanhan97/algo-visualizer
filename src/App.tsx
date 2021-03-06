@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+interface ArrElement {
+  value: number;
+  color: string;
+}
+
+enum SortType {
+  BUBBLE_SORT = "BUBBLE_SORT",
+  INSERTION_SORT = "INSERTION_SORT",
+}
+
 function App() {
   const [sortType, setSortType] = useState(SortType.BUBBLE_SORT);
   const [arr, setArr] = useState([] as ArrElement[]);
-
-  useEffect(() => {
-    generateRandomArray();
-  }, []);
+  const [snapshots, setSnapshots] = useState([] as ArrElement[][]);
 
   const getRandomColor = () => {
     const color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
@@ -27,8 +34,48 @@ function App() {
       });
     }
 
-    console.log(res);
+    setSnapshots([]);
     setArr(res);
+  };
+
+  useEffect(generateRandomArray, []);
+
+  const sort = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    switch (sortType) {
+      case SortType.BUBBLE_SORT:
+        bubbleSort();
+        break;
+      case SortType.INSERTION_SORT:
+        break;
+      default:
+        break;
+    }
+  };
+
+  const bubbleSort = () => {
+    const res = Array.from(arr);
+    const progress: ArrElement[][] = [];
+    let hadSwapped = false;
+
+    do {
+      hadSwapped = false;
+      for (let i = 0; i < res.length - 1; i++) {
+        if (res[i].value > res[i + 1].value) {
+          const temp = res[i];
+          res[i] = res[i + 1];
+          res[i + 1] = temp;
+          hadSwapped = true;
+
+          const snapshot = Array.from(res);
+          progress.push(snapshot);
+
+          break;
+        }
+      }
+    } while (hadSwapped);
+
+    setSnapshots(progress);
   };
 
   return (
@@ -47,31 +94,38 @@ function App() {
             <option value={SortType.BUBBLE_SORT}>Bubble Sort</option>
             <option value={SortType.INSERTION_SORT}>Insertion Sort</option>
           </select>
-          <button onClick={(e) => e.preventDefault()}>Sort</button>
+          <button onClick={sort}>Sort</button>
         </form>
       </section>
 
       <section className="visualizer-wrapper">
         <div className="row">
-          {arr.map((e) => (
-            <div className="element" style={{ backgroundColor: e.color }}>
+          {arr.map((e, i) => (
+            <div
+              key={i}
+              className="element"
+              style={{ backgroundColor: e.color }}
+            >
               {e.value}
             </div>
           ))}
         </div>
+        {snapshots.map((arr, i) => (
+          <div key={i} className="row">
+            {arr.map((e, j) => (
+              <div
+                key={j}
+                className="element"
+                style={{ backgroundColor: e.color }}
+              >
+                {e.value}
+              </div>
+            ))}
+          </div>
+        ))}
       </section>
     </div>
   );
-}
-
-interface ArrElement {
-  value: number;
-  color: string;
-}
-
-enum SortType {
-  BUBBLE_SORT = "BUBBLE_SORT",
-  INSERTION_SORT = "INSERTION_SORT",
 }
 
 export default App;
