@@ -22,12 +22,12 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div>
       <header>
         <h1>Algo Visualizer by An</h1>
       </header>
       <section>
-        <button>Generate Array</button>
+        <button onClick={generateRandomArray}>Generate Array</button>
 
         <select
           value={sortType}
@@ -37,6 +37,14 @@ function App() {
           <option value={SortType.INSERTION_SORT}>Insertion Sort</option>
         </select>
         <button>Sort</button>
+      </section>
+
+      <section>
+        <div>
+          {arr.map((i) => (
+            <div>{i}</div>
+          ))}
+        </div>
       </section>
     </div>
   );
