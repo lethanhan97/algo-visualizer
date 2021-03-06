@@ -3,18 +3,28 @@ import "./App.css";
 
 function App() {
   const [sortType, setSortType] = useState(SortType.BUBBLE_SORT);
-  const [arr, setArr] = useState([] as number[]);
+  const [arr, setArr] = useState([] as ArrElement[]);
 
   useEffect(() => {
     generateRandomArray();
   }, []);
 
+  const getRandomColor = () => {
+    const color = "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+    return color;
+  };
+
   const generateRandomArray = () => {
     const arrLength = 6;
-    const res = [];
+    const res: ArrElement[] = [];
     for (let i = 0; i < arrLength; i++) {
       const randomNum = Math.floor(Math.random() * 10);
-      res.push(randomNum);
+      const color = getRandomColor();
+
+      res.push({
+        value: randomNum,
+        color,
+      });
     }
 
     console.log(res);
@@ -43,13 +53,20 @@ function App() {
 
       <section className="visualizer-wrapper">
         <div className="row">
-          {arr.map((i) => (
-            <div className="element">{i}</div>
+          {arr.map((e) => (
+            <div className="element" style={{ backgroundColor: e.color }}>
+              {e.value}
+            </div>
           ))}
         </div>
       </section>
     </div>
   );
+}
+
+interface ArrElement {
+  value: number;
+  color: string;
 }
 
 enum SortType {

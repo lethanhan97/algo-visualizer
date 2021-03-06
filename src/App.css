@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .wrapper {
   text-align: center;
 }
@@ -9,6 +13,10 @@
 
 .controller form {
   margin-left: 3rem;
+}
+
+.visualizer-wrapper {
+  margin-top: 1rem;
 }
 
 .visualizer-wrapper .row {
